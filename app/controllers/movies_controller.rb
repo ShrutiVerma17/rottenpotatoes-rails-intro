@@ -7,9 +7,17 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
-    @ratings_to_show = []
+    if (params[:home].nil?)
+      @ratings_to_show = []
+      if (!session[:ratings_to_show].nil?)
+        @ratings_to_show = session[:ratings_to_show]
+      end
+      @column_to_sort = session[:column_to_sort]
+    end
     if (!params[:ratings].nil?)
       @ratings_to_show = params[:ratings].keys
+    elsif (@ratings_to_show.nil?)
+      @ratings_to_show = []
     end
     if (!params[:column_clicked].nil?)
       @column_to_sort = params[:column_clicked]
@@ -20,6 +28,8 @@ class MoviesController < ApplicationController
     else
       @movies = movies_subset.order(@column_to_sort)
     end
+    session[:ratings_to_show] = @ratings_to_show
+    session[:column_to_sort] = @column_to_sort
   end
 
   def new

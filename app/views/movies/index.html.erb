@@ -6,6 +6,7 @@
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">
+      <%= hidden_field_tag :home , 1 %>
       <%= label_tag "ratings[#{rating}]", rating, class: 'form-check-label' %>
       <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show.include?(rating), class: 'form-check-input' %>
     </div>
@@ -16,9 +17,9 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th class="<%= @column_to_sort == "title" ? "hilite bg-warning" : "" %>"><a href="<%= movies_path(:column_clicked => "title", :ratings => @ratings_to_show.to_h{|k| [k, 1]}) %>" id="title_header">Movie Title</a> </th>
+      <th class="<%= @column_to_sort == "title" ? "hilite bg-warning" : "" %>"><a href="<%= movies_path(:home => 1, :column_clicked => "title", :ratings => @ratings_to_show.to_h{|k| [k, 1]}) %>" id="title_header">Movie Title</a> </th>
       <th>Rating</th>
-      <th class="<%= @column_to_sort == "release_date" ? "hilite bg-warning" : "" %>"><a href="<%= movies_path(:column_clicked => "release_date", :ratings => @ratings_to_show.to_h{|k| [k, 1]}) %>" id="release_date_header">Release Date</a> </th>
+      <th class="<%= @column_to_sort == "release_date" ? "hilite bg-warning" : "" %>"><a href="<%= movies_path(:home => 1, :column_clicked => "release_date", :ratings => @ratings_to_show.to_h{|k| [k, 1]}) %>" id="release_date_header">Release Date</a> </th>
       <th>More Info</th>
     </tr>
   </thead>
@@ -35,7 +36,7 @@
           <%= movie.release_date %>
         </td>
         <td>
-          <%= link_to "More about #{movie.title}", movie_path(movie) %>
+          <%= link_to "More about #{movie.title}", movie_path(movie, :home => 1) %>
         </td>
       </tr>
     <% end %>
