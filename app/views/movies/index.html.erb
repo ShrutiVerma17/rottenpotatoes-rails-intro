@@ -16,9 +16,9 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <th class="<%= @column_to_sort == "title" ? "hilite bg-warning" : "" %>"><a href="<%= movies_path(:column_clicked => "title", :ratings => @ratings_to_show.to_h{|k| [k, 1]}) %>" id="title_header">Movie Title</a> </th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th class="<%= @column_to_sort == "release_date" ? "hilite bg-warning" : "" %>"><a href="<%= movies_path(:column_clicked => "release_date", :ratings => @ratings_to_show.to_h{|k| [k, 1]}) %>" id="release_date_header">Release Date</a> </th>
       <th>More Info</th>
     </tr>
   </thead>

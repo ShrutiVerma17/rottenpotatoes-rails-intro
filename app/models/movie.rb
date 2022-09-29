@@ -10,4 +10,12 @@ class Movie < ActiveRecord::Base
   def self.all_ratings
     Movie.distinct.pluck(:rating)
   end
+
+  def self.sort(column_to_sort)
+    if column_to_sort.empty?
+      return
+    else
+      order(column_to_sort)
+    end
+  end
 end

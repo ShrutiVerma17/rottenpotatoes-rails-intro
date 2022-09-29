@@ -1,5 +1,4 @@
 class MoviesController < ApplicationController
-
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -12,7 +11,15 @@ class MoviesController < ApplicationController
     if (!params[:ratings].nil?)
       @ratings_to_show = params[:ratings].keys
     end
-    @movies = Movie.with_ratings(@ratings_to_show)
+    if (!params[:column_clicked].nil?)
+      @column_to_sort = params[:column_clicked]
+    end
+    movies_subset = Movie.with_ratings(@ratings_to_show)
+    if (@column_to_sort.nil?)
+      @movies = movies_subset
+    else
+      @movies = movies_subset.order(@column_to_sort)
+    end
   end
 
   def new
